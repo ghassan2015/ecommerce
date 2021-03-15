@@ -46,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
         $this->mapAdminRoutes();
         $this->mapWebRoutes();
+        $this->mapDealerRoutes();
 
         //
     }
@@ -68,6 +69,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/admin.php'));
+    }
+    protected function mapDealerRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/dealer.php'));
     }
     /**
      * Define the "api" routes for the application.

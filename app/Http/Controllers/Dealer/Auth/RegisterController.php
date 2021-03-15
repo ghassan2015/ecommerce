@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\Dealer\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dealer;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use Illuminate\Http\Request;
+
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +26,6 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -38,9 +41,12 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:dealer');
     }
 
+    public function formRegister(){
+        return view('dealers.auth.register');
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -62,12 +68,12 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+         Dealer::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
     }
 }
