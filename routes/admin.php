@@ -27,14 +27,22 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::group(['namespace' => 'Admin\Category', 'middleware' => 'auth:admin', 'prefix' => 'admin/maincategories'], function () {
       //start Category
         Route::get('/','CategoryController@index')->name('admin.category');
-        Route::get('/create/','CategoryController@edit')->name('admin.maincategory.create');
+        Route::get('/create/','CategoryController@create')->name('admin.maincategory.create');
         Route::post('/','CategoryController@store')->name('admin.maincategory.store');
         Route::get('/edit/{id}','CategoryController@edit')->name('admin.maincategory.edit');
         Route::post('update/{id}','CategoryController@update')->name('admin.maincategory.update');
         Route::get('/delete/{id}','CategoryController@destroy')->name('admin.maincategory.destroy');
-//end Category
-
-
-
     });
+    //end Category
+
+    //start Brand
+    Route::group(['namespace' => 'Admin\Brands', 'middleware' => 'auth:admin', 'prefix' => 'admin/brand'], function () {
+        Route::get('/','BrandController@index')->name('admin.brands');
+        Route::get('/create/','BrandController@create')->name('admin.brands.create');
+        Route::post('/','BrandController@store')->name('admin.brands.store');
+        Route::get('/edit/{id}','BrandController@edit')->name('admin.brands.edit');
+        Route::post('update/{id}','BrandController@update')->name('admin.brands.update');
+        Route::get('/delete/{id}','BrandController@destroy')->name('admin.brands.delete');
     });
+    //end Brand
+});
