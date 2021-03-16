@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Category;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -61,25 +61,19 @@ class CategoryController extends Controller
         //if he choose child category we mus t add parent id
 
 
-        $category = Category::create($request->all());
-        $category->slug=$request->slug;
-        $category->is_active=$request->is_active;
-        $this->parent_id=$request->parent_id;
+          $category = Category::create($request->except('_token'));
 
+          //save translations
+          $category->name = $request->name;
+          $category->save();
 
-
-        //save translations
-        $category->name = $request->name;
-        $category->save();
-
-        DB::commit();
-          return redirect()->route('maincategories.index')->with(['success' => 'تم ألاضافة بنجاح']);
+          return redirect()->route('admin.category')->with(['success' => 'تم ألاضافة بنجاح']);
+          DB::commit();
 
 
       } catch (\Exception $ex) {
         DB::rollback();
-        return $ex;
-//        return redirect()->route('maincategories.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+    return redirect()->route('admin.category')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
     }
         //
     }
@@ -103,8 +97,16 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+
+            $category =Category::find($id);
+            return view('dashboard.categories.edit',compact('category' ));
+        }catch (\Exception $exception){
+            return redirect()->route('admin.category')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -115,7 +117,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            if (!$request->has('is_active'))
+                $request->request->add(['is_active' => 0]);
+            else
+                $request->request->add(['is_active' => 1]);
+            $category = Category::find($id);
+            $category->update($request->all());
+
+            return redirect()->route('admin.category')->with(['success' => 'تم ألاضافة بنجاح']);
+        }catch (\Exception $exception){
+            return redirect()->route('admin.category')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+
+        }
     }
 
     /**
@@ -126,6 +140,22 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        try {
+            $subcategory = Category::where('parent_id', $id)->child()->get();
+            if ($subcategory->count() > 0)
+                return redirect()->route('admin.category')->with(['error' => 'حدث خطا لا يمكن حذفهذا العنصر لانه لذيه ابناء  المحاوله لاحقا']);
+
+            $category = Category::find($id);
+            $category->delete();
+            return redirect()->route('admin.category')->with(['success' => 'تم الحذف بنجاح']);
+
+        }catch (\Exception $exception){
+            return redirect()->route('admin.category')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+
+        }
+
+
     }
+
 }
