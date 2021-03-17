@@ -85,6 +85,7 @@
                                                             <input type="password" value="" id=""
                                                                    class="form-control"
                                                                    placeholder="  "
+
                                                                    name="password">
                                                             @error("password")
                                                             <span class="text-danger">{{$message}}</span>

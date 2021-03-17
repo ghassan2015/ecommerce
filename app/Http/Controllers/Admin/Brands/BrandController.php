@@ -115,7 +115,7 @@ class BrandController extends Controller
                 $request->request->add(['is_active' => 1]);
             $brand->update($request->except('_token', 'id', 'photo'));
 
-            return redirect()->route('admin.brands')->with(['success' => 'تم ألاضافة بنجاح']);
+            return redirect()->route('admin.brands')->with(['success' => 'تم التعديل بنجاح']);
         } catch (\Exception $exception) {
             return redirect()->route('admin.brands')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
 

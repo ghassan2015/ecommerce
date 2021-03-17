@@ -23,6 +23,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('/password/reset', 'AdminResetPasswordController@reset');
         Route::get('/password/reset/{token}', 'AdminResetPasswordController@showResetForm')->name('admin.password.reset');
     });
+    Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 'admin/profile'], function () {
+        Route::get('/', 'ProfileController@editProfile')->name('admin.profile');
+        Route::put('/', 'ProfileController@updateProfile')->name('update.profile');
+    });
+
     //start Category
 
     Route::group(['namespace' => 'Admin\Category', 'middleware' => 'auth:admin', 'prefix' => 'admin/maincategories'], function () {
