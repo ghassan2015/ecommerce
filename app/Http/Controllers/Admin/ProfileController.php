@@ -39,7 +39,6 @@ class ProfileController extends Controller
             return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
 
         } catch (\Exception $ex) {
-            return $ex;
             return redirect()->back()->with(['error' => 'هناك خطا ما يرجي المحاولة فيما بعد']);
 
         }

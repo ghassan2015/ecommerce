@@ -27,7 +27,6 @@ class ProfileEdit extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:admins,email,'.$this -> id,
-            'current_password' => ['required', new MatchOldPassword()],
             'password'  => 'nullable|confirmed|min:8'
         ];
     }
