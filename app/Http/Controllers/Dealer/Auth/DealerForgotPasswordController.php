@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Dealer\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-
-class ForgotPasswordController extends Controller
+use Password;
+class DealerForgotPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -19,4 +19,24 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest:dealer');
+    }
+
+    protected function broker()
+    {
+        return Password::broker('dealers');
+    }
+
+    public function showLinkRequestForm()
+    {
+        return view('dealers.auth.passwords.email-dealer');
+    }
 }
