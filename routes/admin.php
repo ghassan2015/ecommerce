@@ -61,4 +61,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     });
     //end Tag
 
+    Route::group(['namespace' => 'Admin\Attribute', 'middleware' => 'auth:admin', 'prefix' => 'admin/attributes'], function () {
+        Route::get('/','AttributeController@index')->name('admin.attributes');
+        Route::get('/create/','AttributeController@create')->name('admin.attributes.create');
+        Route::post('/','AttributeController@store')->name('admin.attributes.store');
+        Route::get('/edit/{id}','AttributeController@edit')->name('admin.attributes.edit');
+        Route::post('update/{id}','AttributeController@update')->name('admin.attributes.update');
+        Route::get('/delete/{id}','AttributeController@destroy')->name('admin.attributes.delete');
+    });
 });
