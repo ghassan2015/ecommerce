@@ -47,7 +47,6 @@
                                               action="{{route('admin.maincategory.update',$category -> id)}}"
                                               method="POST"
                                               enctype="multipart/form-data">
-                                            @method('PUT')
                                             @csrf
 
                                             <input name="id" value="{{$category -> id}}" type="hidden">

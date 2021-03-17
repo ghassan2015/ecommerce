@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Brands;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BrandsRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,19 +33,12 @@ class BrandController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-
-
-
-
-
+    public function store(BrandsRequest $request){
         //validation
-
         if (!$request->has('is_active'))
             $request->request->add(['is_active' => 0]);
         else
             $request->request->add(['is_active' => 1]);
-
 
         $fileName = "";
         if ($request->has('photo')) {
@@ -85,10 +79,10 @@ class BrandController extends Controller
     {
         try {
 
-            $category = Category::find($id);
-            return view('dashboard.categories.edit', compact('category'));
+            $brand = Brand::find($id);
+            return view('dashboard.brands.edit', compact('brand'));
         } catch (\Exception $exception) {
-            return redirect()->route('admin.category')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return redirect()->route('admin.brands')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
 
         }
     }
@@ -101,19 +95,29 @@ class BrandController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BrandsRequest $request, $id)
     {
         try {
+            $brand = Brand::find($id);
+
+            if ($request->has('photo')) {
+                $fileName = uploadImage('brands', $request->photo);
+                Brand::where('id', $id)
+                    ->update([
+                        'photo' => $fileName,
+                    ]);
+            }
+
+
             if (!$request->has('is_active'))
                 $request->request->add(['is_active' => 0]);
             else
                 $request->request->add(['is_active' => 1]);
-            $category = Category::find($id);
-            $category->update($request->all());
+            $brand->update($request->except('_token', 'id', 'photo'));
 
-            return redirect()->route('admin.category')->with(['success' => 'تم ألاضافة بنجاح']);
+            return redirect()->route('admin.brands')->with(['success' => 'تم ألاضافة بنجاح']);
         } catch (\Exception $exception) {
-            return redirect()->route('admin.category')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return redirect()->route('admin.brands')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
 
         }
     }
@@ -128,16 +132,13 @@ class BrandController extends Controller
     {
 
         try {
-            $subcategory = Category::where('parent_id', $id)->child()->get();
-            if ($subcategory->count() > 0)
-                return redirect()->route('admin.category')->with(['error' => 'حدث خطا لا يمكن حذفهذا العنصر لانه لذيه ابناء  المحاوله لاحقا']);
 
-            $category = Category::find($id);
-            $category->delete();
-            return redirect()->route('admin.category')->with(['success' => 'تم الحذف بنجاح']);
+            $brand = Brand::find($id);
+            $brand->delete();
+            return redirect()->route('admin.brands')->with(['success' => 'تم الحذف بنجاح']);
 
         } catch (\Exception $exception) {
-            return redirect()->route('admin.category')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return redirect()->route('admin.brands')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
 
         }
 

@@ -23,10 +23,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('/password/reset', 'AdminResetPasswordController@reset');
         Route::get('/password/reset/{token}', 'AdminResetPasswordController@showResetForm')->name('admin.password.reset');
     });
+    //start Category
 
     Route::group(['namespace' => 'Admin\Category', 'middleware' => 'auth:admin', 'prefix' => 'admin/maincategories'], function () {
-      //start Category
-        Route::get('/','CategoryController@index')->name('admin.category');
+        Route::get('/','CategoryController@index')->name('admin.maincategory');
         Route::get('/create/','CategoryController@create')->name('admin.maincategory.create');
         Route::post('/','CategoryController@store')->name('admin.maincategory.store');
         Route::get('/edit/{id}','CategoryController@edit')->name('admin.maincategory.edit');
@@ -36,7 +36,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     //end Category
 
     //start Brand
-    Route::group(['namespace' => 'Admin\Brands', 'middleware' => 'auth:admin', 'prefix' => 'admin/brand'], function () {
+    Route::group(['namespace' => 'Admin\Brands', 'middleware' => 'auth:admin', 'prefix' => 'admin/brands'], function () {
         Route::get('/','BrandController@index')->name('admin.brands');
         Route::get('/create/','BrandController@create')->name('admin.brands.create');
         Route::post('/','BrandController@store')->name('admin.brands.store');
@@ -45,4 +45,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/delete/{id}','BrandController@destroy')->name('admin.brands.delete');
     });
     //end Brand
+    //start Tag
+    Route::group(['namespace' => 'Admin\Tag', 'middleware' => 'auth:admin', 'prefix' => 'admin/tags'], function () {
+        Route::get('/','TagController@index')->name('admin.tags');
+        Route::get('/create/','TagController@create')->name('admin.tags.create');
+        Route::post('/','TagController@store')->name('admin.tags.store');
+        Route::get('/edit/{id}','TagController@edit')->name('admin.tags.edit');
+        Route::post('update/{id}','TagController@update')->name('admin.tags.update');
+        Route::get('/delete/{id}','TagController@destroy')->name('admin.tags.delete');
+    });
+    //end Tag
+
 });

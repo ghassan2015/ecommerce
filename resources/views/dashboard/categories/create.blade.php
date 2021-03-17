@@ -10,7 +10,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="">الرئيسية </a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route('maincategories.index')}}"> الاقسام
+                                <li class="breadcrumb-item"><a href="{{route('admin.maincategory')}}"> الاقسام
                                         الرئيسية </a>
                                 </li>
                                 <li class="breadcrumb-item active"> أضافه قسم رئيسي
@@ -44,22 +44,12 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('maincategories.store')}}"
+                                              action="{{route('admin.maincategory.store')}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
 
 
-                                            <div class="form-group">
-                                                <label> صوره القسم </label>
-                                                <label id="projectinput7" class="file center-block">
-                                                    <input type="file" id="file" name="photo">
-                                                    <span class="file-custom"></span>
-                                                </label>
-                                                @error('photo')
-                                                <span class="text-danger">{{$message}}</span>
-                                                @enderror
-                                            </div>
 
                                             <div class="form-body">
 
