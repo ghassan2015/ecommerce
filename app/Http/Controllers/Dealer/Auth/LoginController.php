@@ -67,5 +67,18 @@ class LoginController extends Controller
             return $ex;
         }
 
+
+    }
+    public function logout()
+    {
+
+        $gaurd = $this->getGaurd();
+        $gaurd->logout();
+
+        return redirect()->route('dealer.login');
+    }
+    private function getGaurd()
+    {
+        return auth('dealer');
     }
 }

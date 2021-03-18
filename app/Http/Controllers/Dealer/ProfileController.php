@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Controllers\Dealer;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileEdit;
+use App\Models\Admin;
+use App\Models\Dealer;
+use Illuminate\Http\Request;
+
+class ProfileController extends Controller
+{
+    public function editProfile()
+    {
+
+        $dealer = Dealer::find(auth('dealer')->user()->id);
+
+        return view('dealers.profile.edit', compact('dealer'));
+
+    }
+
+    public function updateProfile(ProfileEdit $request)
+    {
+        //validate
+        // db
+
+        try {
+
+            $dealer = Dealer::find(auth('dealer')->user()->id);
+
+            if ($request->filled('password')) {
+                $request->merge(['password' => bcrypt($request->password)]);
+            }
+
+            unset($request['id']);
+            unset($request['password_confirmation']);
+
+            $dealer->update($request->all());
+
+            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+
+        } catch (\Exception $ex) {
+            return redirect()->back()->with(['error' => 'هناك خطا ما يرجي المحاولة فيما بعد']);
+
+        }
+
+    }
+}

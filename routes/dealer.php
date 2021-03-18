@@ -13,7 +13,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['namespace' => 'Dealer', 'middleware' => 'auth:dealer', 'prefix' => 'dealer'], function () {
 
     Route::get('/', 'DashboradController@index')->name('dealer.dashboard');  // the first page admin visits if authenticated
-    Route::get('logout', 'DashboradController@logout')->name('admin.logout');
 Route::get('/information/{id}','InformationDealer@information')->name('dealer_information');
 });
 Route::group(['namespace' => 'Dealer\Auth', 'middleware' => 'guest:dealer', 'prefix' => 'dealer'], function () {
@@ -28,7 +27,13 @@ Route::group(['namespace' => 'Dealer\Auth', 'middleware' => 'guest:dealer', 'pre
 
 });
 
-
+Route::group(['namespace' => 'Dealer\Auth', 'middleware' => 'auth:dealer', 'prefix' => 'dealer/'], function () {
+    Route::get('logout', 'LoginController@logout')->name('dealer.logout');
+});
+Route::group(['namespace' => 'Dealer', 'middleware' => 'auth:dealer', 'prefix' => 'dealer/profile'], function () {
+    Route::get('/', 'ProfileController@editProfile')->name('dealer.profile');
+    Route::put('/', 'ProfileController@updateProfile')->name('update.profile');
+});
 Route::group(['namespace' => 'Dealer','prefix' => 'products'], function () {
     Route::get('/', 'ProductController@index')->name('admin.products');
     Route::get('general-information', 'ProductController@create')->name('admin.products.general.create');

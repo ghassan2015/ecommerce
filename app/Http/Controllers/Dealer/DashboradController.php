@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class DashboradController extends Controller
 {
     public function index(){
-        return view('dealers.home');
+        return view('dealers.index');
     }
     public function logout()
     {

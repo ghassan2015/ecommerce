@@ -13,21 +13,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 'admin'], function () {
         Route::get('/', 'DashboradController@index')->name('admin.dashboard');  // the first page admin visits if authenticated
-        Route::get('logout', 'DashboradController@logout')->name('admin.logout');
     });
-    Route::group(['namespace' => 'Admin\Auth', 'middleware' => 'guest:admin', 'prefix' => 'admin'], function () {
-        Route::get('login', 'LoginController@login')->name('admin.login');
-        Route::post('login', 'LoginController@postLogin')->name('admin.post.login');
-        Route::post('/password/email', 'AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
-        Route::get('/password/reset', 'AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
-        Route::post('/password/reset', 'AdminResetPasswordController@reset');
-        Route::get('/password/reset/{token}', 'AdminResetPasswordController@showResetForm')->name('admin.password.reset');
-    });
+
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 'admin/profile'], function () {
         Route::get('/', 'ProfileController@editProfile')->name('admin.profile');
         Route::put('/', 'ProfileController@updateProfile')->name('update.profile');
     });
-
     //start Category
 
     Route::group(['namespace' => 'Admin\Category', 'middleware' => 'auth:admin', 'prefix' => 'admin/maincategories'], function () {
@@ -50,6 +41,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/delete/{id}','BrandController@destroy')->name('admin.brands.delete');
     });
     //end Brand
+
     //start Tag
     Route::group(['namespace' => 'Admin\Tag', 'middleware' => 'auth:admin', 'prefix' => 'admin/tags'], function () {
         Route::get('/','TagController@index')->name('admin.tags');
@@ -60,7 +52,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/delete/{id}','TagController@destroy')->name('admin.tags.delete');
     });
     //end Tag
-
     Route::group(['namespace' => 'Admin\Attribute', 'middleware' => 'auth:admin', 'prefix' => 'admin/attributes'], function () {
         Route::get('/','AttributeController@index')->name('admin.attributes');
         Route::get('/create/','AttributeController@create')->name('admin.attributes.create');
@@ -68,5 +59,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/edit/{id}','AttributeController@edit')->name('admin.attributes.edit');
         Route::post('update/{id}','AttributeController@update')->name('admin.attributes.update');
         Route::get('/delete/{id}','AttributeController@destroy')->name('admin.attributes.delete');
+    });
+    Route::group(['namespace' => 'Admin\Auth', 'middleware' => 'auth:admin', 'prefix' => 'admin/'], function () {
+        Route::get('logout', 'LoginController@logout')->name('admin.logout');
+    });
+    Route::group(['namespace' => 'Admin\Auth', 'middleware' => 'guest:admin', 'prefix' => 'admin'], function () {
+        Route::get('login', 'LoginController@login')->name('admin.login');
+        Route::post('login', 'LoginController@postLogin')->name('admin.post.login');
+        Route::post('/password/email', 'AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+        Route::get('/password/reset', 'AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+        Route::post('/password/reset', 'AdminResetPasswordController@reset');
+        Route::get('/password/reset/{token}', 'AdminResetPasswordController@showResetForm')->name('admin.password.reset');
     });
 });
