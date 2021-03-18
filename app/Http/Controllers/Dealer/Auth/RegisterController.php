@@ -70,11 +70,11 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
-         Dealer::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-         return redirect()->route('dealer.dashboard');
+        $dealer=new Dealer();
+        $dealer->name=$request->name;
+        $dealer->email=$request->email;
+        $dealer->password=Hash::make($request->password);
+             $dealer->save();
+         return redirect()->route('dealer_information',$dealer->id);
     }
 }

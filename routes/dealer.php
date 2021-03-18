@@ -14,6 +14,7 @@ Route::group(['namespace' => 'Dealer', 'middleware' => 'auth:dealer', 'prefix' =
 
     Route::get('/', 'DashboradController@index')->name('dealer.dashboard');  // the first page admin visits if authenticated
     Route::get('logout', 'DashboradController@logout')->name('admin.logout');
+Route::get('/information/{id}','InformationDealer@information')->name('dealer_information');
 });
 Route::group(['namespace' => 'Dealer\Auth', 'middleware' => 'guest:dealer', 'prefix' => 'dealer'], function () {
     Route::get('register', 'RegisterController@formRegister')->name('dealer.register');
@@ -26,3 +27,21 @@ Route::group(['namespace' => 'Dealer\Auth', 'middleware' => 'guest:dealer', 'pre
     Route::get('/password/reset/{token}', 'DealerResetPasswordController@showResetForm')->name('dealer.password.reset');
 
 });
+
+
+Route::group(['namespace' => 'Dealer','prefix' => 'products'], function () {
+    Route::get('/', 'ProductController@index')->name('admin.products');
+    Route::get('general-information', 'ProductController@create')->name('admin.products.general.create');
+    Route::post('store-general-information', 'ProductController@store')->name('admin.products.general.store');
+
+    Route::get('price/{id}', 'ProductController@getPrice')->name('admin.products.price');
+    Route::post('price', 'ProductController@saveProductPrice')->name('admin.products.price.store');
+
+    Route::get('stock/{id}', 'ProductController@getStock')->name('admin.products.stock');
+    Route::post('stock', 'ProductController@saveProductStock')->name('admin.products.stock.store');
+
+    Route::get('images/{id}', 'ProductController@addImages')->name('admin.products.images');
+    Route::post('images', 'ProductController@saveProductImages')->name('admin.products.images.store');
+    Route::post('images/db', 'ProductController@saveProductImagesDB')->name('admin.products.images.store.db');
+});
+
