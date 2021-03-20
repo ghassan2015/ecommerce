@@ -44,7 +44,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.products.price.store')}}"
+                                              action="{{route('dealer.products.price.store')}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf

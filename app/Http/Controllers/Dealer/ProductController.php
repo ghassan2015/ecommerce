@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -17,7 +18,8 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::select('id','slug','price', 'created_at')->paginate(15);
+
+        $products = Product::select('id','slug','price', 'created_at')->where('dealer_id',Auth::guard('dealer')->user()->id)->paginate(15);
         return view('dealers.products.general.index', compact('products'));
     }
 
@@ -33,7 +35,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-
         DB::beginTransaction();
 
         //validation
@@ -47,6 +48,7 @@ class ProductController extends Controller
             'slug' => $request->slug,
             'brand_id' => $request->brand_id,
             'is_active' => $request->is_active,
+            'dealer_id'=>$request->dealer_id,
         ]);
         //save translations
         $product->name = $request->name;
@@ -55,13 +57,13 @@ class ProductController extends Controller
         $product->save();
 
         //save product categories
-
+        $product->tags()->attach($request->tags);
         $product->categories()->attach($request->categories);
 
         //save product tags
 
         DB::commit();
-        return redirect()->route('admin.products')->with(['success' => 'تم ألاضافة بنجاح']);
+        return redirect()->route('dealer.products')->with(['success' => 'تم ألاضافة بنجاح']);
 
 
     }
@@ -79,7 +81,7 @@ class ProductController extends Controller
 
             Product::whereId($request -> product_id) -> update($request -> only(['price','special_price','special_price_type','special_price_start','special_price_end']));
 
-            return redirect()->route('admin.products')->with(['success' => 'تم التحديث بنجاح']);
+            return redirect()->route('dealer.products')->with(['success' => 'تم التحديث بنجاح']);
         }catch(\Exception $ex){
 
         }
@@ -97,7 +99,7 @@ class ProductController extends Controller
 
         Product::whereId($request -> product_id) -> update($request -> except(['_token','product_id']));
 
-        return redirect()->route('admin.products')->with(['success' => 'تم التحديث بنجاح']);
+        return redirect()->route('dealer.products')->with(['success' => 'تم التحديث بنجاح']);
 
     }
 
@@ -132,7 +134,7 @@ class ProductController extends Controller
 
 
 
-            return redirect()->route('admin.products')->with(['success' => 'تم التحديث بنجاح']);
+            return redirect()->route('dealer.products')->with(['success' => 'تم التحديث بنجاح']);
 
         }catch(\Exception $ex){
 return  $ex;

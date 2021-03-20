@@ -35,18 +35,17 @@ Route::group(['namespace' => 'Dealer', 'middleware' => 'auth:dealer', 'prefix' =
     Route::put('/', 'ProfileController@updateProfile')->name('update.profile');
 });
 Route::group(['namespace' => 'Dealer','prefix' => 'products'], function () {
-    Route::get('/', 'ProductController@index')->name('admin.products');
-    Route::get('general-information', 'ProductController@create')->name('admin.products.general.create');
-    Route::post('store-general-information', 'ProductController@store')->name('admin.products.general.store');
+    Route::get('/', 'ProductController@index')->name('dealer.products');
+    Route::get('general-information', 'ProductController@create')->name('dealer.products.general.create');
+    Route::post('store-general-information', 'ProductController@store')->name('dealer.products.general.store');
+    Route::get('price/{id}', 'ProductController@getPrice')->name('dealer.products.price');
+    Route::post('price', 'ProductController@saveProductPrice')->name('dealer.products.price.store');
 
-    Route::get('price/{id}', 'ProductController@getPrice')->name('admin.products.price');
-    Route::post('price', 'ProductController@saveProductPrice')->name('admin.products.price.store');
+    Route::get('stock/{id}', 'ProductController@getStock')->name('dealer.products.stock');
+    Route::post('stock', 'ProductController@saveProductStock')->name('dealer.products.stock.store');
 
-    Route::get('stock/{id}', 'ProductController@getStock')->name('admin.products.stock');
-    Route::post('stock', 'ProductController@saveProductStock')->name('admin.products.stock.store');
-
-    Route::get('images/{id}', 'ProductController@addImages')->name('admin.products.images');
-    Route::post('images', 'ProductController@saveProductImages')->name('admin.products.images.store');
-    Route::post('images/db', 'ProductController@saveProductImagesDB')->name('admin.products.images.store.db');
+    Route::get('images/{id}', 'ProductController@addImages')->name('dealer.products.images');
+    Route::post('images', 'ProductController@saveProductImages')->name('dealer.products.images.store');
+    Route::post('images/db', 'ProductController@saveProductImagesDB')->name('dealer.products.images.store.db');
 });
 

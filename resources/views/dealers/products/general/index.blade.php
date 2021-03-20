@@ -10,7 +10,7 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">الرئيسية</a>
+                                <li class="breadcrumb-item"><a href="{{route('dealer.dashboard')}}">الرئيسية</a>
                                 </li>
                                 <li class="breadcrumb-item active"> الاقسام الرئيسية
                                 </li>
@@ -67,13 +67,13 @@
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href="{{route('admin.products.price',$product -> id)}}"
+                                                                <a href="{{route('dealer.products.price',$product -> id)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">السعر</a>
 
-                                                                <a href="{{route('admin.products.images',$product -> id)}}"
+                                                                <a href="{{route('dealer.products.images',$product -> id)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">الصور</a>
 
-                                                                <a href="{{route('admin.products.stock',$product -> id)}}"
+                                                                <a href="{{route('dealer.products.stock',$product -> id)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">المستودع</a>
                                                             </div>
                                                         </td>

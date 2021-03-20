@@ -44,13 +44,16 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.products.general.store')}}"
+                                              action="{{route('dealer.products.general.store')}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
 
-
-
+                                            <input type="hidden" id="dealer_id"
+                                                   class="form-control"
+                                                   placeholder="  "
+                                                   value="{{auth('dealer') -> user() -> id}}"
+                                                   name="dealer_id">
                                             <div class="form-body">
 
                                                 <h4 class="form-section"><i class="ft-home"></i> البيانات الاساسية للمنتج   </h4>

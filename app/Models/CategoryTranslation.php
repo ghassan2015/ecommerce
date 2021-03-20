@@ -12,6 +12,6 @@ class CategoryTranslation extends Model
      * @var array
      */
 
-    protected $fillable = ['name'];
+    protected $guarded = [];
     public $timestamps = false;
 }

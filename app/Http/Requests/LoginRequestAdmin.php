@@ -25,7 +25,7 @@ class LoginRequestAdmin extends FormRequest
     {
         return [
             'email'           => 'required|max:255|email',
-            'password'           => 'required|confirmed',
+            'password'           => 'required|',
 
         ];
     }

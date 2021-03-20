@@ -23,6 +23,9 @@ class Dealer extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function product(){
+        return $this->hasMany(Product::class,'dealer_id');
+    }
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new DealerRestPassword($token));

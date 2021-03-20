@@ -44,7 +44,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.products.images.store.db')}}"
+                                              action="{{route('dealer.products.images.store.db')}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
@@ -113,7 +113,7 @@
                 }
 
                 ,
-                url: "{{ route('admin.products.images.store') }}", // Set the url
+                url: "{{ route('dealer.products.images.store') }}", // Set the url
                 success:
                     function (file, response) {
                         $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')

@@ -37,7 +37,8 @@ class Product extends Model{
         'manage_stock',
         'qty',
         'in_stock',
-        'is_active'
+        'is_active',
+        'dealer_id'
     ];
 
     /**
@@ -135,6 +136,9 @@ class Product extends Model{
     public function getTotal($converted = true)
     {
         return $total =  $this->special_price ?? $this -> price;
+    }
+    public function dealer(){
+        return $this->belongsTo(Dealer::class,'dealer_id');
     }
 
 

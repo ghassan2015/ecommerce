@@ -33,4 +33,8 @@ class Tag extends Model
      */
     protected $hidden = ['translations'];
 
+    public function product(){
+        return $this->belongsToMany(Product::class,'product_tags');
+    }
+
 }

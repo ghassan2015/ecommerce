@@ -12,7 +12,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect']],function () {
 
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 'admin'], function () {
-        Route::get('/', 'DashboradController@index')->name('admin.dashboard');  // the first page admin visits if authenticated
+        Route::get('/', 'DashboradController@index')->name('admin.dashboard');
+        Route::group(['prefix' => 'sliders'], function () {
+            Route::get('/', 'SliderController@addImages')->name('admin.sliders.create');
+            Route::post('images', 'SliderController@saveSliderImages')->name('admin.sliders.images.store');
+            Route::post('images/db', 'SliderController@saveSliderImagesDB')->name('admin.sliders.images.store.db');
+
+        });// the first page admin visits if authenticated
     });
 
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 'admin/profile'], function () {
