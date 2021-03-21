@@ -16,9 +16,8 @@ use App\Models\Dealer;
 use App\Models\Product;
 
 Route::get('/test', function () {
-    return $category=Product::with('categories')->get();
-    ;
-     view('welcome');
+
+return     view('front.site');
 });
 
 //Auth::routes();

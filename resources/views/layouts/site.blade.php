@@ -23,7 +23,6 @@
 
 
     <script type="text/javascript">
-
         var prestashop = {
             "static_token": "28add935523ef131c8432825597b9928",
             "token": "cad5fe8236d849a3b4023c4e5ca6a313"
@@ -40,25 +39,20 @@
         #main-site {
             background-color: #ffffff;
         }
-
         @media (min-width: 1200px) {
             .container {
                 width: 1200px;
             }
-
             #header .container {
                 width: 1200px;
             }
-
             .footer .container {
                 width: 1200px;
             }
-
             #index .container {
                 width: 1200px;
             }
         }
-
         #popup-subscribe .modal-dialog .modal-content {
             background-image: url(../modules/novthemeconfig/images/newsletter_bg-1.png);
         }

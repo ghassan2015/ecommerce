@@ -17,6 +17,7 @@ class DashboardController extends Controller
     {
         $data = [];
         $data['ProductByCategory']=Product::with('categories')->get();
+        $data['ProductByBrand']=Product::with('brand')->get();
 
         $data['sliders'] = Slider::get(['photo']);
         $data['categories'] = Category::parent()->select('id', 'slug')->with(['childrens' => function ($q) {

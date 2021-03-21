@@ -1,3 +1,5 @@
+
+
 @extends('layouts.site')
 
 @section('slider')
@@ -51,7 +53,7 @@
             </div>
         </div>
     </div>
-    @stop
+@stop
 @section('content')
 
     <div id="main">
@@ -527,6 +529,7 @@
                                              data-autoplay="false" data-autoplaytimeout="6000" data-loop="false"
                                              data-margin="30" data-dots="false" data-nav="true" data-items="2"
                                              data-items_large="2" data-items_tablet="3" data-items_mobile="1">
+                                            @foreach($ProductByCategory as $product )
                                             <div class="item  text-center">
                                                 <div class="d-flex flex-wrap align-items-center product-miniature js-product-miniature item-row first_item"
                                                      data-id-product="1" data-id-product-attribute="40"
@@ -567,7 +570,7 @@
                                                                     <a title="View seller profile"
                                                                        href="jmarketplace/1_david-james/index.htm">
                                                                         <i class="fa fa-user"></i>
-                                                                      {{$product->dealer->name}}
+                                                                        {{$product->dealer->name}}
                                                                     </a>
                                                                 </p>
 
